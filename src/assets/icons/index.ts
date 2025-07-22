@@ -28,6 +28,7 @@ export { default as User } from './User';
 export { default as Video } from './Video';
 export { default as Xmark } from './Xmark';
 export { default as Trash } from './Trash';
+export { default as Disable } from './Disable';
 export { default as Check } from './Check';
 export { Pdf } from './Pdf';
 export { GeneratePdf } from './GeneratePdf';

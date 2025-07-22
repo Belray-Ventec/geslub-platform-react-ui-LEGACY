@@ -22,6 +22,7 @@ export type iconsType =
   | 'CircleXmark'
   | 'Image'
   | 'Trash'
+  | 'Disable'
   | 'Check'
   | 'Seeker'
   | 'Pdf'

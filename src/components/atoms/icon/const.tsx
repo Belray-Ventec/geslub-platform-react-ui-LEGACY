@@ -47,6 +47,7 @@ import {
   TipoEquipos,
   Webinars,
   Calculator,
+  Disable,
 } from '../../../assets/icons';
 import { Pdf } from '../../../assets/icons/Pdf';
 import { GeneratePdf } from '../../../assets/icons/GeneratePdf';
@@ -96,6 +97,7 @@ export const icons: iconsType[] = [
   'AngleDown',
   'CircleXmark',
   'Trash',
+  'Disable',
   'Check',
   'Pdf',
   'GeneratePdf',
@@ -171,6 +173,7 @@ export const iconList = (size: number, color: string, src?: string) => {
     CircleXmark: <CircleXmark size={size} color={color} />,
     Image: <img alt="icon" src={src} width={size} height={size} />,
     Trash: <Trash size={size} color={color} />,
+    Disable: <Disable size={size} color={color} />,
     Check: <Check size={size} color={color} />,
     Seeker: <Seeker size={size} color={color} />,
     Pdf: <Pdf size={size} color={color} />,
