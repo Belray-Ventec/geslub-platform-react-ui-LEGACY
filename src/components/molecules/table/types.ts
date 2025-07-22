@@ -14,6 +14,7 @@ export interface ActionsProps<T> {
   onInfo?: (d: T) => void;
   showAdminOptions?: boolean;
   showDisabled?: boolean;
+  showDisabledInAdminOptions?: boolean;
   onDisabled?: (d: T) => void;
   onEnabled?: (d: T) => void;
   isRowEnabled?: boolean;
@@ -50,6 +51,7 @@ export interface TableProps<T> {
   showAdminOptions?: boolean;
   getRowIsEnabled?: (d: T) => boolean;
   showDisabled?: boolean;
+  showDisabledInAdminOptions?: boolean;
   onDisabled?: (d: T) => void;
   onEnabled?: (d: T) => void;
   isLoading?: boolean;

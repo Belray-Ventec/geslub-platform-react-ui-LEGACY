@@ -45,6 +45,7 @@ export function Table<T>({
   showAdminOptions,
   getRowIsEnabled = () => true,
   showDisabled,
+  showDisabledInAdminOptions = false,
   onDisabled,
   onEnabled,
   isLoading = false,
@@ -175,6 +176,7 @@ export function Table<T>({
                       onInfo={onInfo}
                       showAdminOptions={showAdminOptions}
                       showDisabled={showDisabled}
+                      showDisabledInAdminOptions={showDisabledInAdminOptions}
                       onDisabled={onDisabled}
                       onEnabled={onEnabled}
                       isRowEnabled={getRowIsEnabled(item)}
@@ -223,6 +225,7 @@ function Actions<T>({
   onInfo,
   showAdminOptions,
   showDisabled,
+  showDisabledInAdminOptions,
   onDisabled,
   onEnabled,
   isRowEnabled = true,
@@ -290,7 +293,7 @@ function Actions<T>({
           color={isRowEnabled ? '#e74c3c' : '#2ecc71'}
         >
           {isRowEnabled ? (
-            <Icon icon="Trash" size={13} color="#e74c3c" />
+            <Icon icon="Disable" size={13} color="#e74c3c" />
           ) : (
             <Icon icon="Check" size={13} color="#2ecc71" />
           )}
@@ -318,6 +321,26 @@ function Actions<T>({
               />
               <span className={styles.visually_hidden}>editItem</span>
             </Button>
+            {showDisabledInAdminOptions && (
+              <Button
+                ariaLabel={isRowEnabled ? 'disableItem' : 'enableItem'}
+                onClick={(): void =>
+                  isRowEnabled
+                    ? onDisabled && onDisabled(item)
+                    : onEnabled && onEnabled(item)
+                }
+                backgroundColor={themeColor}
+              >
+                <Icon
+                  icon={isRowEnabled ? 'Disable' : 'Check'}
+                  size={20}
+                  color={stylesInline(themeColor).penToSquare}
+                />
+                <span className={styles.visually_hidden}>
+                  {isRowEnabled ? 'disableItem' : 'enableItem'}
+                </span>
+              </Button>
+            )}
             <Button
               ariaLabel="deleteItem"
               onClick={(): void => onDeleteItem && onDeleteItem(item)}

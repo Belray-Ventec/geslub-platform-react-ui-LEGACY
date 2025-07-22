@@ -41,6 +41,7 @@ Default.args = {
   showDownload: true,
   showInfo: true,
   showDisabled: true,
+  showDisabledInAdminOptions: false,
   showAdminOptions: true,
   getRowIsEnabled: (item) => item.enabled,
   onDelete: (data) => {
