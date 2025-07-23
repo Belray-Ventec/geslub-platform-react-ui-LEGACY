@@ -17,7 +17,7 @@ import { Icon } from '../../atoms/icon';
 import { ActionsProps, TableProps, HeaderButtonProps, ThProps } from './types';
 import { stylesInline } from './const';
 import Tooltip from '../../atoms/tooltip';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 
 export function Table<T>({
   columns,
@@ -129,16 +129,15 @@ export function Table<T>({
               </tr>
             ) : paginator.data.length > 0 ? (
               paginator.data.map((item, index) => (
-                <tr
-                  style={
-                    getRowIsEnabled(item) === false
-                      ? { opacity: 0.4 }
-                      : { opacity: 1 }
-                  }
-                  key={getRowKey(item)}
-                >
+                <tr key={getRowKey(item)}>
                   {showHeaderButtons && (
-                    <td>
+                    <td
+                      style={
+                        getRowIsEnabled(item) === false
+                          ? { opacity: 0.4 }
+                          : { opacity: 1 }
+                      }
+                    >
                       <input
                         className={styles.checkbox}
                         disabled={getRowIsEnabled(item) === false}
@@ -152,6 +151,11 @@ export function Table<T>({
                   {columns.map(({ getValue, isCentered }, idx) => (
                     <td
                       className={isCentered ? styles.center_data : undefined}
+                      style={
+                        getRowIsEnabled(item) === false
+                          ? { opacity: 0.4 }
+                          : { opacity: 1 }
+                      }
                       key={idx}
                     >
                       {React.isValidElement(getValue(item))
@@ -286,9 +290,11 @@ function Actions<T>({
           style={{ display: 'flex', gap: '0.3rem' }}
           onClick={(e) => {
             e.stopPropagation();
-            isRowEnabled && onDisabled
-              ? onDisabled(item)
-              : onEnabled && onEnabled(item);
+            if (isRowEnabled) {
+              onDisabled && onDisabled(item);
+            } else {
+              onEnabled && onEnabled(item);
+            }
           }}
           color={isRowEnabled ? '#e74c3c' : '#2ecc71'}
         >
@@ -323,22 +329,21 @@ function Actions<T>({
             </Button>
             {showDisabledInAdminOptions && (
               <Button
-                ariaLabel={isRowEnabled ? 'disableItem' : 'enableItem'}
-                onClick={(): void =>
-                  isRowEnabled
-                    ? onDisabled && onDisabled(item)
-                    : onEnabled && onEnabled(item)
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (isRowEnabled) {
+                    onDisabled && onDisabled(item);
+                  } else {
+                    onEnabled && onEnabled(item);
+                  }
+                }}
                 backgroundColor={themeColor}
               >
-                <Icon
-                  icon={isRowEnabled ? 'Disable' : 'Check'}
-                  size={20}
-                  color={stylesInline(themeColor).penToSquare}
-                />
-                <span className={styles.visually_hidden}>
-                  {isRowEnabled ? 'disableItem' : 'enableItem'}
-                </span>
+                {isRowEnabled ? (
+                  <Icon icon="Disable" size={20} color="#e74c3c" />
+                ) : (
+                  <Icon icon="Check" size={20} color="#2ecc71" />
+                )}
               </Button>
             )}
             <Button
@@ -377,10 +382,17 @@ function HeaderButtons<T>({
           onClick={() => share && share(selected)}
         >
           <Tooltip position="up" text="Compartir">
-            <Flex justifyItems="center" alignItems="center" gap={2}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
               <ShareNodes size={20} />
               <span>Compartir</span>
-            </Flex>
+            </div>
           </Tooltip>
         </Button>
       )}
